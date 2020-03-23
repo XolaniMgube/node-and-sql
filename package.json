@@ -1,0 +1,23 @@
+{
+  "name": "project",
+  "version": "1.0.0",
+  "description": "quiring a database using node",
+  "main": "project.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/XolaniMgube/project.git"
+  },
+  "author": "Xolani Mgube",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/XolaniMgube/project/issues"
+  },
+  "homepage": "https://github.com/XolaniMgube/project#readme",
+  "dependencies": {
+    "jasmine": "^3.5.0",
+    "pg": "^7.18.2"
+  }
+}
