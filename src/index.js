@@ -35,6 +35,24 @@ async function addVisitor(id, name, age, date, time, assistedBy, comments) {
   }
 }
 
+async function deleteVisit(id) {
+  try {
+    await client.connect()
+    await client.query("BEGIN")
+    await client.query("delete from visitors where id=$1", [id])
+    console.log("visitor deleted")
+    await client.query("COMMIT")
+      
+  }
+  catch(ex){
+    console.log("Failed to delete visitor " + ex)
+  }
+  finally{
+    await client.end()
+    console.log("script closed")
+  }
+}
+
 async function deleteAllVisitors() {
   try{
     await client.connect()
@@ -54,6 +72,8 @@ async function deleteAllVisitors() {
 
 // addVisitor(1, 'Xolani', 25, '03-24-2020', '20:00', 'Kurtlin', 'He was drinking lean the whole time')
 // addVisitor(2, 'Lebo', 18, '03-24-2020', '20:00', 'Lentswe', 'I did not like Lentswe')
-viewTable()
-// deleteAllVisitors()
 // viewTable()
+// deleteAllVisitors()
+viewTable()
+
+// deleteVisit(1)
