@@ -87,6 +87,23 @@ async function updateVisitor(name, age, date, time, assistedBy, comments, idToBe
   }
 }
 
+async function viewOneVisitor(id) {
+  try{
+    await client.connect()
+    await client.query("BEGIN")
+    const results = await client.query("select * from visitors where id = $1", [id])
+    console.table(results.rows)
+    await client.query("COMMIT")
+  }
+  catch(ex) {
+    console.log("Failed to view visitor" + ex)
+  }
+  finally{
+    await client.end()
+    console.log("script closed")
+  }
+}
+
 
 
 
@@ -95,3 +112,4 @@ async function updateVisitor(name, age, date, time, assistedBy, comments, idToBe
 // deleteAllVisitors()
 // updateVisitor('Xolani', '30', '03-24-2020', '20:00', 'Kurtlin', 'final test in comments', 4)
 // deleteVisit(1)
+viewOneVisitor(3)
