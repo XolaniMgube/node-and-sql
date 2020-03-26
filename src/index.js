@@ -18,11 +18,11 @@ async function viewTable(){
   console.log("Client disconnected successfully.")
 }
 
-async function addVisitor(id, name, age, date, time, assistedBy, comments) {
+async function addVisitor(name, age, date, time, assistedBy, comments) {
   try{
     await client.connect()
     await client.query("BEGIN")
-    await client.query("insert into visitors values ($1, $2, $3, $4, $5, $6, $7)", [id, name, age, date, time, assistedBy, comments])
+    await client.query("insert into visitors (visitorname, visitorage, dateofvisit, timeofvisit, assistedby, comments) values ($1, $2, $3, $4, $5, $6)", [name, age, date, time, assistedBy, comments])
     console.log("Inserted a new row")
     await client.query("COMMIT")
   }
@@ -70,10 +70,28 @@ async function deleteAllVisitors() {
   }
 }
 
-// addVisitor(1, 'Xolani', 25, '03-24-2020', '20:00', 'Kurtlin', 'He was drinking lean the whole time')
-// addVisitor(2, 'Lebo', 18, '03-24-2020', '20:00', 'Lentswe', 'I did not like Lentswe')
+async function updateVisitor(name, age, date, time, assistedBy, comments, idToBeUpdated) {
+  try{
+    await client.connect()
+    await client.query("BEGIN")
+    await client.query("update visitors set visitorname = $1, visitorage = $2, dateofvisit = $3, timeofvisit = $4, assistedby = $5, comments = $6 where id = $7", [name, age, date, time, assistedBy, comments, idToBeUpdated])
+    console.log("visitor updated")
+    await client.query("COMMIT")
+  }
+  catch(ex){
+    console.log("Failed to update visitor" + ex)
+  }
+  finally{
+    await client.end()
+    console.log("script closed")
+  }
+}
+
+
+
+
+// addVisitor('Xolani', 26, '03-24-2020', '20:00', 'Stuber', 'Ping pong guru after me')
 // viewTable()
 // deleteAllVisitors()
-viewTable()
-
+// updateVisitor('Xolani', '30', '03-24-2020', '20:00', 'Kurtlin', 'final test in comments', 4)
 // deleteVisit(1)
